@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import com.example.amber.volunteerapp.Fragment.MapFragment;
 import com.example.amber.volunteerapp.Fragment.MymsgFragment;
 
+import com.igexin.sdk.PushManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         initViews();//初始化控件
         initEvents();//初始化事件
         initDatas();//初始化数据
+
+        PushManager.getInstance().initialize(this.getApplicationContext(),
+                DemoPushService.class);
+        // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(),
+                DemoIntentService.class);
     }
 
     private void initDatas() {

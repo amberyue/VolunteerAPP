@@ -7,4 +7,5 @@ package bean;
 public class GlobalVariable {
     public static Result<UserMsg> r1;
 
+    public static String cid;
 }
