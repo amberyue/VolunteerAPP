@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
@@ -13,10 +14,10 @@ import android.widget.LinearLayout;
 import com.example.amber.volunteerapp.Fragment.MapFragment;
 import com.example.amber.volunteerapp.Fragment.MymsgFragment;
 
-import com.igexin.sdk.PushManager;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     //声明ViewPager
@@ -39,15 +40,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        init();
+        String registrationId = JPushInterface.getRegistrationID(this);
+        Log.e("1099", "run:--------->registrationId： "+registrationId );
+
         initViews();//初始化控件
         initEvents();//初始化事件
         initDatas();//初始化数据
 
-        PushManager.getInstance().initialize(this.getApplicationContext(),
-                DemoPushService.class);
-        // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
-        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(),
-                DemoIntentService.class);
     }
 
     private void initDatas() {
@@ -152,4 +153,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mImgMap.setImageResource(R.mipmap.tab_weixin_normal);
         mImgMymsg.setImageResource(R.mipmap.tab_find_frd_normal);
     }
+
+    private void init(){
+        JPushInterface.init(getApplicationContext());
+
+    }
+
 }

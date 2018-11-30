@@ -248,9 +248,8 @@ public class  LoginActivity extends AppCompatActivity implements LoaderCallbacks
                     mAuthTask = new UserLoginTask(idNo, password);
                     String url="http://172.20.10.7:8080/RescueSystem/rescue";
 
-//192.168.48.141  192.168.191.1  10.34.24.13   172.20.10.7(iphone手机热点）
+//192.168.48.141  192.168.191.1  10.34.24.13   172.20.10.7(iphone手机热点） 172.22.169.255                    requestOne= (RequestOne) mAuthTask.toBean();
                     requestOne= (RequestOne) mAuthTask.toBean();
-
                     String result=mAuthTask.postJson(url,requestOne);
 
                     Log.i("re","result"+result);
@@ -380,7 +379,7 @@ public class  LoginActivity extends AppCompatActivity implements LoaderCallbacks
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         //在此处理异常， arg1即为捕获到的异常
-        Log.i("AAA", "uncaughtException   " + e);
+        Log.i("login", "uncaughtException   " + e);
 
     }
 
@@ -430,6 +429,7 @@ public class  LoginActivity extends AppCompatActivity implements LoaderCallbacks
         }
 
         public  String postJson(String api, Object RequestJsonbean) throws IOException {
+
 
             String result= HttpUtils.MypostJson(api,RequestJsonbean);
             System.out.println(result);

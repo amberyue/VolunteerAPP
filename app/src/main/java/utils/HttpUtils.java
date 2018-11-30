@@ -25,7 +25,7 @@ public class HttpUtils {
         Gson gson = new Gson();
         String json = gson.toJson(RequestJsonbean);
         OkHttpClient client = new OkHttpClient();
-
+        Log.d("debug", api+RequestJsonbean.toString());
         //json body
         MediaType media =MediaType.parse("application/json;charset=utf-8");
         RequestBody body = RequestBody.create(media, json);

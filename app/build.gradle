@@ -29,15 +29,6 @@ android {
             }
         }
 
-        manifestPlaceholders = [
-                GETUI_APP_ID    : "Bg2AVLWzgFAE1flodltUq",
-                GETUI_APP_KEY   : "SkwKnxfdeLAGpr3FXFnGA1",
-                GETUI_APP_SECRET: "xuKWtaOvSb6S2535jDKym5"
-        ]
-
-        ndk {
-            abiFilters "armeabi"
-        }
     }
 
     dependencies {
@@ -56,6 +47,5 @@ android {
         compile 'com.android.support:support-v4:25.3.1'
         testCompile 'junit:junit:4.12'
 
-        compile 'com.getui:sdk:2.12.5.0'
     }
 }
