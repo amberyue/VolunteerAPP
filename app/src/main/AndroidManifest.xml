@@ -109,11 +109,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RecordActivity" />
 
-        <activity android:name=".RescuePage" android:exported="false">
-            <intent-filter>
-                <action android:name="jpush.testAction" />
-                <category android:name="jpush.testCategory" />
-            </intent-filter>
+        <activity
+            android:name="com.example.amber.volunteerapp.RescuePage"
+            android:launchMode="singleTask">
+
+            <!--<intent-filter>-->
+                <!--<action android:name="jpush.testAction" />-->
+                <!--<category android:name="jpush.testCategory" />-->
+            <!--</intent-filter>-->
         </activity>
 
 
@@ -170,12 +173,12 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
             <!-- Optional -->
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
+                <!--<action android:name="android.intent.action.PACKAGE_REMOVED" />-->
 
-                <data android:scheme="package" />
-            </intent-filter>
+                <!--<data android:scheme="package" />-->
+            <!--</intent-filter>-->
         </receiver>
 
         <receiver android:name=".MyReceiver">
@@ -183,10 +186,10 @@
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <!--<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />-->
                 <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />-->
-                <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
                 <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />-->
-                <!--<action android:name="cn.jpush.android.intent.CONNECTION" />-->
-                <category android:name="${applicationId}" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <category android:name="com.example.amber.volunteerapp" />
             </intent-filter>
         </receiver>
 

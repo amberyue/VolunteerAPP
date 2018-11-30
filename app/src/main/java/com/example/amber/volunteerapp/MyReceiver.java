@@ -16,6 +16,8 @@ public class MyReceiver extends BroadcastReceiver {
     private NotificationManager nm;
 	@Override
 	public void onReceive(Context context, Intent intent) {
+        Log.i("context", context.toString());
+        Log.i("intent", intent.getAction().toString());
 //		Bundle bundle = intent.getExtras();
 //		String title = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
 //		Log.e("id",title);
@@ -29,28 +31,32 @@ public class MyReceiver extends BroadcastReceiver {
 //            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            context.startActivity(i);
 //        }
-   if (null == nm) {
-nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-}
-Bundle bundle = intent.getExtras();
-Log.d(TAG, "onReceive - " + intent.getAction() + ", extras: " );
-if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
-Log.d(TAG, "JPush用户注册成功");
-} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-Log.d(TAG, "接受到推送下来的自定义消息");
-} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
+        if (null == nm) {
+            nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        Bundle bundle = intent.getExtras();
+        Log.i(TAG, "onReceive - " + intent.getAction() + ", extras: ");
+        if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
+            Log.i(TAG, "JPush用户注册成功");
+        } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
+            Log.i(TAG, "接受到推送下来的自定义消息");
+        } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 
-            Log.d(TAG, "接受到推送下来的通知");
-receivingNotification(context,bundle);
+            Log.i(TAG, "接受到推送下来的通知");
+            receivingNotification(context, bundle);
 
-} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-Log.d(TAG, "用户点击打开了通知");
-openNotification(context,bundle);
-} else {
-}
+        } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
+            Log.i(TAG, "用户点击打开了通知");
+            Intent i = new Intent(context, com.example.amber.volunteerapp.RescuePage.class);
+//            i.putExtras(bundle);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
+            openNotification(context, bundle);
+        } else {
+        }
 
 
-	}
+    }
 
     private void receivingNotification(Context context, Bundle bundle){
 //String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
@@ -59,18 +65,19 @@ openNotification(context,bundle);
 //        Logger.d(TAG, "message : " + message);
 //        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
 //        Logger.d(TAG, "extras : " + extras);
-}
+        }
 
         private void openNotification(Context context, Bundle bundle) {
-//        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-//        String myValue = "";
-//        try {
-//            JSONObject extrasJson = new JSONObject(extras);
-//            myValue = extrasJson.optString("myKey");
-//        } catch (Exception e) {
-//            Logger.w(TAG, "Unexpected: extras is not a valid json", e);
-//            return;
-}
+//            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+//            String myValue = "";
+//            try {
+//            JSONObject extrasJson = new JSONObject(extras);
+//
+//                myValue = extrasJson.optString("myKey");
+//            } catch (Exception e) {
+//            Log.i(TAG, "Unexpected: extras is not a valid json", e);
+//            return;
+        }
 //        if (TYPE_THIS.equals(myValue)) {
 //            Intent mIntent = new Intent(context, ThisActivity.class);
 //            mIntent.putExtras(bundle);
