@@ -119,7 +119,10 @@
             <!--</intent-filter>-->
         </activity>
 
+<activity android:name=".WalkRouteDetailActivity"
+    android:screenOrientation="portrait">
 
+</activity>
 
         <!-- Required SDK核心功能-->
         <activity

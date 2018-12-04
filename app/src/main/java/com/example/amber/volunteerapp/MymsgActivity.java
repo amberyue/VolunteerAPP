@@ -100,6 +100,7 @@ public class MymsgActivity extends AppCompatActivity implements
 //                transaction.replace(
 //                transaction.replace(1,new MymsgFragment());
 //                transaction.commit();
+                //
                 // TODO: 2018/11/21 可能跳转有问题跳回fregment ，获得sessionid（存到缓存。。。）
 
             }
