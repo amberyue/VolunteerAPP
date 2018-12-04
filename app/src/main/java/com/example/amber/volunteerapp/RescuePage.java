@@ -23,8 +23,10 @@ import com.amap.api.maps.AMap.InfoWindowAdapter;
 import com.amap.api.maps.AMap.OnInfoWindowClickListener;
 import com.amap.api.maps.AMap.OnMapClickListener;
 import com.amap.api.maps.AMap.OnMarkerClickListener;
+import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -76,6 +78,7 @@ public class RescuePage extends Activity implements OnMapClickListener,
 
     private LatLonPoint mStartPoint = null;
     private LatLonPoint mEndPoint = null;
+    private UiSettings mUiSettings;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -93,7 +96,10 @@ public class RescuePage extends Activity implements OnMapClickListener,
 //        mContext = this.getApplicationContext();
 //        mapView = (MapView) findViewById(R.id.route_map);
 //        mapView.onCreate(bundle);// 此方法必须重写
+
         init();
+        setUpMap();
+
     }
 
     /**
@@ -111,14 +117,14 @@ public class RescuePage extends Activity implements OnMapClickListener,
         mLocationOption.setNeedAddress(true);
 
         //设置是否只定位一次,默认为false
-        mLocationOption.setOnceLocation(false);
+        mLocationOption.setOnceLocation(true);
 
 
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);
 
         //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(200000000);
+        mLocationOption.setInterval(20000000);
 
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
@@ -133,7 +139,16 @@ public class RescuePage extends Activity implements OnMapClickListener,
     private void init() {
         if (aMap == null) {
             aMap = mapView.getMap();
+            mUiSettings = aMap.getUiSettings();
         }
+
+        //设置logo位置
+        mUiSettings.setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_CENTER);//高德地图标志的摆放位置
+        mUiSettings.setZoomControlsEnabled(true);//地图缩放控件是否可见
+        mUiSettings.setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM);//地图缩放控件的摆放位置
+        //aMap  为地图控制器对象
+        aMap.getUiSettings().setMyLocationButtonEnabled(true);//地图的定位标志是否可见
+        aMap.setMyLocationEnabled(true);//地图定位标志是否可以点击
         registerListener();
         mRouteSearch = new RouteSearch(this);
         mRouteSearch.setRouteSearchListener(this);
@@ -143,7 +158,7 @@ public class RescuePage extends Activity implements OnMapClickListener,
         mRotueTimeDes = (TextView) findViewById(R.id.firstline);
         mRouteDetailDes = (TextView) findViewById(R.id.secondline);
 
-        setUpMap();
+
     }
 
 
@@ -152,8 +167,8 @@ public class RescuePage extends Activity implements OnMapClickListener,
         public void onLocationChanged(AMapLocation amapLocation) {
             if (amapLocation != null) {
                 if (amapLocation.getErrorCode() == 0) {
-                    mLocationListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-
+//                    mLocationListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+                    Log.i("mLocationListener","mLocationListener");
                     Log.v("getLocationType", ""+amapLocation.getLocationType() ) ;
                     lat = amapLocation.getLatitude();
                     lon = amapLocation.getLongitude();
@@ -272,6 +287,7 @@ public class RescuePage extends Activity implements OnMapClickListener,
 //            ToastUtil.show(mContext, "终点未设置");
         }
         showProgressDialog();
+        Log.i("searchRouteResult",mStartPoint+"     mStartPoint");
         final RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(
                 mStartPoint, mEndPoint);
         if (routeType == ROUTE_TYPE_WALK) {// 步行路径规划
@@ -402,9 +418,11 @@ public class RescuePage extends Activity implements OnMapClickListener,
 
     }
 
+
     @Override
     public void onMapLoaded() {
         searchRouteResult(ROUTE_TYPE_WALK);
+        Log.i("onMaploaded","heng");
     }
 }
 
